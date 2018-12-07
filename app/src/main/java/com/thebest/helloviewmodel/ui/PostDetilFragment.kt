@@ -29,14 +29,21 @@ class PostDetilFragment : Fragment() {
         return binding.root
     }
 
+    private lateinit var postDetailViewModel: PostDetailViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as MainActivity).apply {
-            val postDetailViewModel = ViewModelProviders.of(this).get(PostDetailViewModel::class.java)
-            postDetailViewModel.post.observe(this , Observer{
+            postDetailViewModel = ViewModelProviders.of(this).get(PostDetailViewModel::class.java)
+            postDetailViewModel.onViewStateRestored(savedInstanceState)
+            postDetailViewModel.post?.observe(this , Observer{
                 it?.let {
                     binding.post = it
                 }
             })
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        postDetailViewModel.onSaveInstanceState(outState)
     }
 }

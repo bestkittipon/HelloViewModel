@@ -51,7 +51,7 @@ class PostFragment : Fragment() , PostSelectedListener {
     override fun onPostSelected(post: Post) {
         (activity as MainActivity).apply {
             val postDetailViewModel = ViewModelProviders.of(this).get(PostDetailViewModel::class.java)
-            postDetailViewModel.post.postValue(post)
+            postDetailViewModel.post?.postValue(post)
 
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.content_container, PostDetilFragment.newInstance())
